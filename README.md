@@ -1,0 +1,2 @@
+# App_MyTask_Flutter
+Este projecto foi desenvolvido para a disciplina de Dispositivos Móveis. Consiste numa aplicação de gestão de tarefas diárias.  Foi desenvolvido em Flutter, utilizando sua linguagen nativa, que é o Dart  Para saber mais sobre esta estrutura, ver a sua documentação, que está disponível em (https://flutter.dev/).  Os códigos fonte React Native estão em GitHub (https://github.com/flutter/flutter) e estão disponíveis para começar a utilizar.  Traduzido com a versão gratuita do tradutor - www.DeepL.com/Translator
