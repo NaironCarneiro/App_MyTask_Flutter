@@ -8,14 +8,14 @@ import 'package:mytasks/themes/colors.dart';
 // import 'package:aula_flutter/widgets/google_sign_in_button.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _SignInScreenState extends State<Login> {
+class _RegisterScreenState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class _SignInScreenState extends State<Login> {
             const Padding( 
               padding: EdgeInsets.only(left: 20),
                child:Text(
-                'Login',
+                'Cadastro',
                 style: TextStyle(
                   fontFamily: 'Comfortaa',
                   fontSize: 36,
@@ -49,6 +49,14 @@ class _SignInScreenState extends State<Login> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
+                        labelText: 'Nome completo',
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    const TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
                         labelText: 'Email',
                       ),
                     ),
@@ -60,7 +68,7 @@ class _SignInScreenState extends State<Login> {
                         labelText: 'Senha',
                       ),
                     ),
-                    const SizedBox(height: 35),
+                    const SizedBox(height: 45),
                     SizedBox(
                       width: 400,
                       height: 55,
@@ -75,47 +83,7 @@ class _SignInScreenState extends State<Login> {
                         child: const Text("ACESSAR"),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    SizedBox(
-                      width: 400,
-                      height: 55,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          // Respond to button press
-                        },
-                        style: OutlinedButton.styleFrom(
-                          primary: Colors.black,
-                          side: BorderSide(color: Colors.black, width: 1),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            // Image.asset('assets/images/goog.png'),
-                            Image.asset(
-                              'assets/images/goog.png',
-                              height: 30,
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                'GOOGLE',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 35),
-                    TextButton(
-                        onPressed: () {}, child: Text('Esqueci minha senha')),
-                    SizedBox(height: 10),
-                    Text('Ainda não possui cadastro ?'),
-                    TextButton(onPressed: () {}, child: Text('Cadastre-se')),
+                    
                   ]),
             ),
           ],

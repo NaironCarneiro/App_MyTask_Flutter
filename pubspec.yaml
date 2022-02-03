@@ -56,13 +56,16 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-assets:
-    - assets/images/
+  assets:
+    - assets/
     - assets/fonts/
+    - assets/images/lupa.png
+    - assets/images/Union.png
+    - assets/images/goog.png
+
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -75,13 +78,13 @@ assets:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-fonts:
-  - family: Comfortaa
-    fonts:
-      - asset: assets/fonts/Comfortaa-VariableFont_wght.ttf
-  - family: Roboto
-    fonts:
-      - asset: assets/fonts/Roboto-Black.ttf
+  fonts:
+    - family: Comfortaa
+      fonts:
+        - asset: assets/fonts/Comfortaa-VariableFont_wght.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Black.ttf
  
   #
   # For details regarding fonts from package dependencies,

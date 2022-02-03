@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mytasks/screens/listTasks.dart';
+// import 'package:mytasks/screens/listTasks.dart';
 import 'package:mytasks/screens/login.dart';
+import 'package:mytasks/screens/register.dart';
+// import 'package:mytasks/screens/register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Login(),
+      home: const ListTasks(),
     );
   }
 }
