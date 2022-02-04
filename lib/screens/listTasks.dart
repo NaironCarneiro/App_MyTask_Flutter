@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:mytasks/screens/addTask.dart';
 import 'package:mytasks/themes/colors.dart';
 // import 'package:aula_flutter/util/authentication.dart';
 // import 'package:aula_flutter/widgets/google_sign_in_button.dart';
@@ -34,7 +35,7 @@ class _ListTasksScreenState extends State<ListTasks> {
           ),
         ],
         automaticallyImplyLeading: true,
-        leading: IconButton(icon: Image.asset('assets/images/Union.png'),
+        leading: IconButton(icon: Icon(Icons.exit_to_app,color: Colors.black,),
         onPressed: (){},
           ),
        ),
@@ -48,12 +49,79 @@ class _ListTasksScreenState extends State<ListTasks> {
           
       //     child: const Icon(Icons.add),
       //  ),
+    body: SafeArea(
+      child: Container(
+        height: 100,
+        
+     child : Card(
+        shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10))),
+        color: AppColors.blue1,
+        shadowColor: Colors.black,
+        elevation: 7,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              // borderRadius: BorderRadius.circular(10),
+              // child: SizedBox(
+                // height: 170,
+                // child: CachedNetworkImage(
+                //   fit: BoxFit.cover,
+                //   imageUrl: product.img,
+                //   placeholder: (context, url) => const Center(
+                //       child:
+                //           CircularProgressIndicator(color: AppColors.primary)),
+                //   errorWidget: (context, url, error) => const Icon(Icons.error),
+                // ),
+              // ),
+            ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+              child: Text(
+                'descriptions',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Text(
+                      'task 01',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: AppColors.green,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    // context.read<AppState>().addProduct(product);
+                    // Message.showMessage(
+                    //     context, 'Produto adicionado na cesta.');
+                  },
+                  icon: Icon(Icons.delete),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      ),
+    ),
               floatingActionButton: Container(
                 height: 80.0,
                 width: 80.0,
                 child: FittedBox(                  
                 child: FloatingActionButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddTask()));
+                  },
                 child: Icon(Icons.add),
                 backgroundColor: AppColors.yellowButton,
               ),

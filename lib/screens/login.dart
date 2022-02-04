@@ -3,6 +3,8 @@
 
 import 'dart:ui';
 
+import 'package:flutter/widgets.dart';
+import 'package:mytasks/screens/listTasks.dart';
 import 'package:mytasks/themes/colors.dart';
 // import 'package:aula_flutter/util/authentication.dart';
 // import 'package:aula_flutter/widgets/google_sign_in_button.dart';
@@ -70,7 +72,7 @@ class _SignInScreenState extends State<Login> {
                           backgroundColor: AppColors.green,
                         ),
                         onPressed: () {
-                          // Respond to button press
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ListTasks()));
                         },
                         child: const Text("ACESSAR"),
                       ),
