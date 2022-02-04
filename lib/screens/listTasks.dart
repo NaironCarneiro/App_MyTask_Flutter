@@ -52,7 +52,6 @@ class _ListTasksScreenState extends State<ListTasks> {
     body: SafeArea(
       child: Container(
         height: 100,
-        
      child : Card(
         shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10))),

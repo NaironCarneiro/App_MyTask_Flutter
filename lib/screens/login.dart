@@ -3,12 +3,18 @@
 
 import 'dart:ui';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mytasks/screens/listTasks.dart';
+import 'package:mytasks/services/authentication.dart';
+import 'package:mytasks/services/authentication.dart';
 import 'package:mytasks/themes/colors.dart';
 // import 'package:aula_flutter/util/authentication.dart';
 // import 'package:aula_flutter/widgets/google_sign_in_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../services/authentication.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -18,8 +24,40 @@ class Login extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<Login> {
+
+  Future<FirebaseApp> _initializeFirebase() async{
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    
+
+  //   @override
+  // void initState() {
+  //   super.initState();
+  //   emailController.addListener(() {
+  //     final String text = emailController.text.toLowerCase();
+  //     emailController.value = emailController.value.copyWith(
+  //       text: text,
+  //       selection:
+  //           TextSelection(baseOffset: text.length, extentOffset: text.length),
+  //       composing: TextRange.empty,
+  //     );
+  //   });
+  // }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
+    final authService = Provider.of<AuthService>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -40,14 +78,13 @@ class _SignInScreenState extends State<Login> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Column(
-                
-                
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // Padding(padding: padding)
                     // padding: EdgeInsets.only(left: 20),
                     
-                    const TextField(
+                    TextField(
+                      controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -55,7 +92,8 @@ class _SignInScreenState extends State<Login> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const TextField(
+                    TextField(
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -72,7 +110,8 @@ class _SignInScreenState extends State<Login> {
                           backgroundColor: AppColors.green,
                         ),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ListTasks()));
+                          authService.signInWithEmailAndPassword(emailController.text, passwordController.text);
+                          print("deu certo");
                         },
                         child: const Text("ACESSAR"),
                       ),
@@ -83,7 +122,7 @@ class _SignInScreenState extends State<Login> {
                       height: 55,
                       child: OutlinedButton(
                         onPressed: () {
-                          // Respond to button press
+                          
                         },
                         style: OutlinedButton.styleFrom(
                           primary: Colors.black,
