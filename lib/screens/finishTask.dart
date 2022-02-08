@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:mytasks/screens/listTasks.dart';
 import 'package:mytasks/themes/colors.dart';
 // import 'package:aula_flutter/util/authentication.dart';
 // import 'package:aula_flutter/widgets/google_sign_in_button.dart';
@@ -28,7 +29,10 @@ class _FinishTaskScreenState extends State<FinishTask> {
         
         automaticallyImplyLeading: true,
         leading: IconButton(icon:Image.asset('assets/images/Union.png',),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ListTasks()));
+        },
           ),
        ),
       body: SafeArea(
@@ -54,7 +58,8 @@ class _FinishTaskScreenState extends State<FinishTask> {
                           backgroundColor: AppColors.green,
                         ),
                         onPressed: () {
-                          // Respond to button press
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ListTasks()));
+                          
                         },
                         child: const Text("SAIR", style: TextStyle(fontSize:20),),
                       ),

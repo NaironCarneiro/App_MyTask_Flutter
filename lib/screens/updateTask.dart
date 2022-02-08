@@ -3,19 +3,62 @@
 
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mytasks/screens/addTask.dart';
+import 'package:mytasks/screens/listTasks.dart';
 import 'package:mytasks/themes/colors.dart';
 // import 'package:aula_flutter/util/authentication.dart';
 // import 'package:aula_flutter/widgets/google_sign_in_button.dart';
 import 'package:flutter/material.dart';
 
 class UpdateTask extends StatefulWidget {
-  const UpdateTask({Key? key}) : super(key: key);
+  // const UpdateTask({Key? key}) : super(key: key);
+  DocumentSnapshot docId;
+  UpdateTask({required this.docId});
 
   @override
   _UpdateTaskScreenState createState() => _UpdateTaskScreenState();
 }
 
 class _UpdateTaskScreenState extends State<UpdateTask> {
+   TextEditingController dataEdit = TextEditingController();
+   TextEditingController descriptionEdit = TextEditingController();
+   TextEditingController hourEdit = TextEditingController();
+
+showAlertDialog1(BuildContext context) 
+{ 
+    // configura o button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () { 
+      Navigator.of(context).pop();
+    },
+  );
+  // configura o  AlertDialog
+  AlertDialog alerta = AlertDialog(
+    title: Text("Por favor"),
+    content: Text("Preencha todos os campos para salvar a terefa"),
+    actions: [
+      okButton,
+    ],
+  );
+  // exibe o dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alerta;
+    },
+  );
+}
+
+  @override
+  void initState(){
+    descriptionEdit = TextEditingController(text: widget.docId.get('description'));
+    dataEdit = TextEditingController(text: widget.docId.get('data'));
+    hourEdit = TextEditingController(text: widget.docId.get('hour'));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +71,11 @@ class _UpdateTaskScreenState extends State<UpdateTask> {
         
         backgroundColor: AppColors.blue2,
         elevation: 5,
-        actions: [
-          IconButton(
-            onPressed: () {  },
-           icon :             
-             Image.asset('assets/images/lupa.png'),
-          
-          ),
-        ],
         automaticallyImplyLeading: true,
         leading: IconButton(icon:Image.asset('assets/images/Union.png',),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.pop(context);
+        },
           ),
        ),
   
@@ -47,20 +84,21 @@ class _UpdateTaskScreenState extends State<UpdateTask> {
           // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height:50),
+            SizedBox(height:40),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                    child:  const TextField(
+                    child: TextFormField(
+                      controller: descriptionEdit,
+                      maxLines: null,
                       decoration: InputDecoration(                  
                         border: OutlineInputBorder(),
-                        hintMaxLines: 3,
                         hintText: 'Descrição ',
                         labelText: 'Descrição da tarefa',
-                        contentPadding: EdgeInsets.fromLTRB(10, 70, 0, 30),
+                        // contentPadding: EdgeInsets.fromLTRB(10, 70, 0, 30),
 
                       ),
                     ),
@@ -68,7 +106,8 @@ class _UpdateTaskScreenState extends State<UpdateTask> {
                    
                     const SizedBox(height: 30),
                     Container(
-                    child: const TextField(
+                    child: TextFormField(
+                      controller: dataEdit,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Data',
@@ -78,11 +117,12 @@ class _UpdateTaskScreenState extends State<UpdateTask> {
                     ),
                     const SizedBox(height: 30),
                     Container(
-                    child: const TextField(
+                    child: TextFormField(
+                      controller: hourEdit,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Senha',
-                        hintText: 'Senha'
+                        labelText: 'Hora',
+                        hintText: 'Hora'
                       ),
                     ),
                     ),
@@ -138,7 +178,20 @@ class _UpdateTaskScreenState extends State<UpdateTask> {
                           backgroundColor: AppColors.green,
                         ),
                         onPressed: () {
-                          // Respond to button press
+                           if(descriptionEdit.text.isEmpty || dataEdit.text.isEmpty|| hourEdit.text.isEmpty){
+                            
+                            showAlertDialog1(context);
+ 
+                          }else{
+                          widget.docId.reference.update({
+                            'description':descriptionEdit.text,
+                            'data': dataEdit.text,
+                            'hour': hourEdit.text,
+                          }).whenComplete((){
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ListTasks()));
+                          });
+                          Navigator.pop(context);
+                          }
                         },
                         child: const Text("ATUALIZAR TAREFA"),
                       ),

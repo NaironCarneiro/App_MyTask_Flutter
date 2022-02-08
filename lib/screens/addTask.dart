@@ -3,6 +3,9 @@
 
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mytasks/screens/finishTask.dart';
 import 'package:mytasks/screens/listTasks.dart';
 import 'package:mytasks/themes/colors.dart';
 // import 'package:aula_flutter/util/authentication.dart';
@@ -17,6 +20,62 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTask> {
+   final data = TextEditingController();
+   final description = TextEditingController();
+   final hour = TextEditingController();
+   final firebase = FirebaseFirestore.instance;
+
+
+showAlertDialog1(BuildContext context) 
+{ 
+    // configura o button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () { 
+      Navigator.of(context).pop();
+    },
+  );
+  // configura o  AlertDialog
+  AlertDialog alerta = AlertDialog(
+    title: Text("Por favor"),
+    content: Text("Preencha todos os campos para salvar a terefa"),
+    actions: [
+      okButton,
+    ],
+  );
+  // exibe o dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alerta;
+    },
+  );
+}
+
+
+   addTasks() async{
+     try{
+    await firebase.collection('tasks').doc().set(
+      {
+        "description": description.text,
+        "data": data.text,
+        "hour": hour.text
+      }
+    );
+
+   }catch (e){
+     print(e);
+   }
+}
+
+   @override
+  void dispose() {
+    description.dispose();
+    data.dispose();
+    hour.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,29 +91,34 @@ class _AddTaskScreenState extends State<AddTask> {
         
         automaticallyImplyLeading: true,
         leading: IconButton(icon:Image.asset('assets/images/Union.png',),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ListTasks()));
+          
+        },
           ),
        ),
   
       body: SafeArea(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
+  
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height:50),
+            SizedBox(height:40),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                    child:  const TextField(
+                    child:  TextFormField(
+                      controller: description, 
+                      maxLines: null,                    
                       decoration: InputDecoration(                  
                         border: OutlineInputBorder(),
-                        hintMaxLines: 3,
                         hintText: 'Descrição ',
                         labelText: 'Descrição da tarefa',
-                        contentPadding: EdgeInsets.fromLTRB(10, 70, 0, 30),
+                        // contentPadding: EdgeInsets.fromLTRB(10, 50, 20, 20),
 
                       ),
                     ),
@@ -62,9 +126,11 @@ class _AddTaskScreenState extends State<AddTask> {
                    
                     const SizedBox(height: 30),
                     Container(
-                    child: const TextField(
+                    child:  TextFormField(
+                      controller: data,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
+                        
                         hintText: 'Data',
                         labelText: 'Data',
                       ),
@@ -72,11 +138,12 @@ class _AddTaskScreenState extends State<AddTask> {
                     ),
                     const SizedBox(height: 30),
                     Container(
-                    child: const TextField(
+                    child:  TextFormField(
+                      controller: hour,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Senha',
-                        hintText: 'Senha'
+                        labelText: 'Hora',
+                        hintText: 'Hora'
                       ),
                     ),
                     ),
@@ -99,7 +166,7 @@ class _AddTaskScreenState extends State<AddTask> {
                         child: const Text("Adicionar imagem"),
                       ),
                     ),         
-                    Row(
+                      Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const <Widget>[
@@ -120,8 +187,6 @@ class _AddTaskScreenState extends State<AddTask> {
                     
                       ],
                     ),
-
-                    
                     const SizedBox(height: 45),
                     SizedBox(
                       width: 400,
@@ -132,7 +197,25 @@ class _AddTaskScreenState extends State<AddTask> {
                           backgroundColor: AppColors.green,
                         ),
                         onPressed: () {
-                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ListTasks()));
+                          if(description.text.isEmpty || data.text.isEmpty|| hour.text.isEmpty){
+                            showAlertDialog1(context);
+ 
+                          }else{
+
+                            addTasks();
+                          description.clear();
+                          data.clear();
+                          hour.clear();
+                         Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => FinishTask()));
+
+
+
+                          }
+
+                          
+                         
+                        
                         },
                         child: const Text("ADICIONAR TAREFA"),
                       ),

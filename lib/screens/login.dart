@@ -1,11 +1,13 @@
 // import 'package:aula_flutter/theme/images.dart';
 // import 'dart:html';
 
-import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mytasks/screens/listTasks.dart';
+import 'package:mytasks/screens/register.dart';
+import 'package:mytasks/services/auth_google.dart';
 import 'package:mytasks/services/authentication.dart';
 import 'package:mytasks/services/authentication.dart';
 import 'package:mytasks/themes/colors.dart';
@@ -31,32 +33,23 @@ class _SignInScreenState extends State<Login> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     
 
-  //   @override
-  // void initState() {
-  //   super.initState();
-  //   emailController.addListener(() {
-  //     final String text = emailController.text.toLowerCase();
-  //     emailController.value = emailController.value.copyWith(
-  //       text: text,
-  //       selection:
-  //           TextSelection(baseOffset: text.length, extentOffset: text.length),
-  //       composing: TextRange.empty,
-  //     );
-  //   });
-  // }
+Future<UserCredential> signInWithGoogle() async {
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    super.dispose();
-  }
+
     final authService = Provider.of<AuthService>(context);
     return Scaffold(
       body: SafeArea(
@@ -111,7 +104,7 @@ class _SignInScreenState extends State<Login> {
                         ),
                         onPressed: () {
                           authService.signInWithEmailAndPassword(emailController.text, passwordController.text);
-                          print("deu certo");
+                          
                         },
                         child: const Text("ACESSAR"),
                       ),
@@ -122,6 +115,11 @@ class _SignInScreenState extends State<Login> {
                       height: 55,
                       child: OutlinedButton(
                         onPressed: () {
+                           
+                        //   final provider = Provider.of<GoogleSignInProvider>(context,listen: false);
+                        //  print("????????????????????????passou daqui de nvovo");
+                        //   provider.googleLogin();
+                        signInWithGoogle();
                           
                         },
                         style: OutlinedButton.styleFrom(
@@ -156,7 +154,10 @@ class _SignInScreenState extends State<Login> {
                         onPressed: () {}, child: Text('Esqueci minha senha')),
                     SizedBox(height: 10),
                     Text('Ainda não possui cadastro ?'),
-                    TextButton(onPressed: () {}, child: Text('Cadastre-se')),
+                    TextButton(onPressed: () {
+                     
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Register()));
+                    }, child: Text('Cadastre-se')),
                   ]),
             ),
           ],
