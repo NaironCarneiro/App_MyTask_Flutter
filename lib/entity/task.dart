@@ -1,10 +1,13 @@
-// import 'package:intl/intl.dart';
-
 class Task {
-  String image;
-  String description;
-  String hour;
-  String data;
+  late String image;
+  late String description;
+  late String hour;
+  late String data;
 
-  Task({required this.image,required this.description, required this.data,required this.hour});
+  Task(String image, String description, String hour, String data) {
+    this.image = image;
+    this.description = description;
+    this.hour = hour;
+    this.data = data;
+  }
 }

@@ -1,13 +1,8 @@
-// import 'package:aula_flutter/theme/images.dart';
-// import 'dart:html';
-
 import 'dart:ui';
 import 'package:mytasks/screens/listTasks.dart';
 import 'package:mytasks/screens/login.dart';
 import 'package:mytasks/services/authentication.dart';
 import 'package:mytasks/themes/colors.dart';
-// import 'package:aula_flutter/util/authentication.dart';
-// import 'package:aula_flutter/widgets/google_sign_in_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -58,18 +53,8 @@ class _RegisterScreenState extends State<Register> {
                 
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Padding(padding: padding)
-                    // padding: EdgeInsets.only(left: 20),
-                    
                     TextFormField(
-                      // validator: (value){
-                      //   if(value == ''){
-                      //     return "Digite algo para acessar";
 
-                      //   }else
-                      //   return null;
-
-                      //  },
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -78,14 +63,7 @@ class _RegisterScreenState extends State<Register> {
                     ),
                     const SizedBox(height: 30),
                      TextFormField(
-                      //  validator: (value){
-                      //   if(value == ''){
-                      //     return "Digite algo para acessar";
-
-                      //   }else
-                      //   return null;
-
-                      //  },
+   
                       controller: emailControllerCad,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -94,14 +72,7 @@ class _RegisterScreenState extends State<Register> {
                     ),
                     const SizedBox(height: 30),
                      TextFormField(
-                      //  validator: (value){
-                      //   if(value == ''){
-                      //     return "Digite algo para acessar";
-
-                      //   }else
-                      //   return null;
-
-                      //  },
+                   
                       controller: passwordControllerCad,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -121,7 +92,6 @@ class _RegisterScreenState extends State<Register> {
                         onPressed: () async {
                            await authService.createUserWithEmailAndPassword(emailControllerCad.text, 
                            passwordControllerCad.text);
-                          //  AlertDialog(title: Text('deu certo'),);
                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ListTasks()));
                            
                         },
